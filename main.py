@@ -7,6 +7,7 @@ load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
+
 def main():
     if api_key is None:
         raise Exception("API key not set")
