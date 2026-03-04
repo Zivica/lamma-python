@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from google import genai
-
+from google.genai.types import UsageMetadata
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -13,6 +13,12 @@ def main():
         raise Exception("API key not set")
     response = client.models.generate_content(model="gemini-2.5-flash",
                                               contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum.")
+
+    if response.usage_metadata is None:
+        raise Exception("No usage metadata")
+    # print(response.contents)
+    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+    print(f"Response tokens: {response.usage_metadata.prompt_token_count}")
     print(response.text)
 
 
